@@ -3,9 +3,12 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Facility Workorder POC</title>
+  <title>시설물 자산/작업지시 관리 PoC</title>
+  <script src="js/storage.js"></script>
+  <script src="js/app.js"></script>
   <script>
-    location.replace(localStorage.getItem("loginUser") ? "dashboard.html" : "login.html");
+    var user = App.getLoginUser();
+    location.replace(user ? "dashboard.html" : "login.html");
   </script>
 </head>
 <body>

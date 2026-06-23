@@ -107,8 +107,10 @@ $(function () {
     var id = String($(this).data("id"));
     if (!confirm("자산을 삭제하시겠습니까?")) return;
     assets = assets.filter(function (item) { return item.id !== id; });
-    Api.saveAssets(assets);
-    render();
+    // 추후 API 저장으로 바뀌어도 저장 완료 후 목록을 갱신하도록 Promise 흐름을 유지한다.
+    Api.saveAssets(assets).done(function () {
+      render();
+    });
   });
 
   $("#assetForm").on("submit", function (event) {
@@ -128,8 +130,10 @@ $(function () {
       assets.push(formData);
     }
 
-    Api.saveAssets(assets);
-    Modal.close("#assetModal");
-    render();
+    // 추후 API 저장으로 바뀌어도 저장 완료 후 모달 닫기와 목록 갱신을 처리한다.
+    Api.saveAssets(assets).done(function () {
+      Modal.close("#assetModal");
+      render();
+    });
   });
 });

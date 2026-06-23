@@ -180,6 +180,11 @@
   background: #e2e8f0;
 }
 
+.badge-muted {
+  color: #475569;
+  background: #e2e8f0;
+}
+
 .pagination {
   display: flex;
   justify-content: center;

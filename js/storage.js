@@ -16,16 +16,21 @@ var Storage = (function () {
     localStorage.setItem(key, JSON.stringify(value));
   }
 
+  function remove(key) {
+    localStorage.removeItem(key);
+  }
+
   return {
     keys: keys,
     get: get,
     set: set,
+    remove: remove,
     clearAll: function () {
-      localStorage.removeItem(keys.assets);
-      localStorage.removeItem(keys.workOrders);
-      localStorage.removeItem(keys.spaces);
-      localStorage.removeItem(keys.histories);
-      localStorage.removeItem(keys.loginUser);
+      remove(keys.assets);
+      remove(keys.workOrders);
+      remove(keys.spaces);
+      remove(keys.histories);
+      remove(keys.loginUser);
     }
   };
 })();

@@ -112,11 +112,13 @@ $(function () {
   $("#importBtn").on("click", function () {
     if (!parsed.length) return alert("Import할 정상 데이터가 없습니다.");
     Api.loadAssets().done(function (assets) {
-      Api.saveAssets(assets.concat(parsed));
-      var successCount = parsed.length;
-      $("#importResult").show().html("Import 완료: 성공 " + successCount + "건 / 실패 " + errors.length + "건");
-      parsed = [];
-      $("#previewBody").html('<tr><td colspan="6" class="empty">미리보기 데이터가 없습니다.</td></tr>');
+      // 추후 API 저장으로 바뀌어도 Import 결과 표시는 저장 완료 후 처리한다.
+      Api.saveAssets(assets.concat(parsed)).done(function () {
+        var successCount = parsed.length;
+        $("#importResult").show().html("Import 완료: 성공 " + successCount + "건 / 실패 " + errors.length + "건");
+        parsed = [];
+        $("#previewBody").html('<tr><td colspan="6" class="empty">미리보기 데이터가 없습니다.</td></tr>');
+      });
     });
   });
 });

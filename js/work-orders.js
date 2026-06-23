@@ -50,7 +50,7 @@ $(function () {
     state.page = pageInfo.page;
     $("#workOrderTableBody").html(pageInfo.rows.map(function (item) {
       return '<tr class="' + (App.isActiveUrgent(item) ? "is-urgent" : "") + '"><td>' + App.escapeHtml(item.title) + "</td><td>" 
-      + App.escapeHtml(assetName(item.assetId)) + "</td><td>" + App.badge(item.priority) + "</td><td>" 
+      + App.escapeHtml(assetName(item.assetId)) + "</td><td>" + App.priorityBadge(item) + "</td><td>" 
       + App.badge(item.status) + "</td><td>" + App.escapeHtml(item.assignee || "-") + "</td><td>" 
       + App.formatDate(item.requestedAt) + '</td><td><button class="btn btn-ghost btn-next" data-id="' + item.id + '">상태 변경</button> ' 
       + '<button class="btn btn-ghost btn-history" data-id="' + item.id + '">이력</button> ' 
@@ -70,24 +70,29 @@ $(function () {
     return index > -1 && index < flow.length - 1 ? flow[index + 1] : status;
   }
 
-  // 상태 변경 이력을 localStorage에 누적 저장한다.
+  // 상태 변경 이력을 저장한다. 실제 저장 방식은 Api에서 localStorage/API로 분리한다.
   function saveHistory(id, from, to) {
-    var histories = Storage.get(Storage.keys.histories, []);
-    histories.push({ workOrderId: id, fromStatus: from, toStatus: to, changedAt: new Date().toISOString() });
-    Storage.set(Storage.keys.histories, histories);
+    return Api.addWorkOrderHistory({
+      workOrderId: id,
+      fromStatus: from,
+      toStatus: to,
+      changedAt: new Date().toISOString()
+    });
   }
 
   // 선택한 작업지시의 상태 변경 이력을 모달에 표시한다.
   function renderHistories(workOrderId) {
-    var histories = Storage.get(Storage.keys.histories, []).filter(function (history) {
-      return history.workOrderId === workOrderId;
-    }).sort(function (a, b) {
-      return b.changedAt.localeCompare(a.changedAt);
-    });
+    Api.loadHistories().done(function (items) {
+      var histories = items.filter(function (history) {
+        return history.workOrderId === workOrderId;
+      }).sort(function (a, b) {
+        return b.changedAt.localeCompare(a.changedAt);
+      });
 
-    $("#historyTableBody").html(histories.map(function (history) {
-      return "<tr><td>" + App.badge(history.fromStatus) + "</td><td>" + App.badge(history.toStatus) + "</td><td>" + App.formatDate(history.changedAt) + "</td></tr>";
-    }).join("") || '<tr><td colspan="3" class="empty">상태 변경 이력이 없습니다.</td></tr>');
+      $("#historyTableBody").html(histories.map(function (history) {
+        return "<tr><td>" + App.badge(history.fromStatus) + "</td><td>" + App.badge(history.toStatus) + "</td><td>" + App.formatDate(history.changedAt) + "</td></tr>";
+      }).join("") || '<tr><td colspan="3" class="empty">상태 변경 이력이 없습니다.</td></tr>');
+    });
   }
 
   $("#woSearchBtn").on("click", function () {
@@ -119,9 +124,11 @@ $(function () {
     data.id = "W" + Date.now();
     data.completedAt = data.status === "DONE" ? new Date().toISOString() : "";
     workOrders.push(data);
-    Api.saveWorkOrders(workOrders);
-    Modal.close("#workOrderModal");
-    render();
+    // 추후 API 저장으로 바뀌어도 저장 완료 후 모달 닫기와 목록 갱신을 처리한다.
+    Api.saveWorkOrders(workOrders).done(function () {
+      Modal.close("#workOrderModal");
+      render();
+    });
   });
 
   $("#workOrderTableBody").on("click", ".btn-next", function () {
@@ -129,11 +136,14 @@ $(function () {
     var item = workOrders.find(function (row) { return row.id === id; });
     var next = nextStatus(item.status);
     if (next === item.status) return alert("더 이상 변경할 상태가 없습니다.");
-    saveHistory(item.id, item.status, next);
-    item.status = next;
-    item.completedAt = next === "DONE" ? new Date().toISOString() : item.completedAt;
-    Api.saveWorkOrders(workOrders);
-    render();
+    saveHistory(item.id, item.status, next).done(function () {
+      item.status = next;
+      item.completedAt = next === "DONE" ? new Date().toISOString() : item.completedAt;
+      // 추후 API 저장으로 바뀌어도 이력 저장과 작업지시 저장이 끝난 뒤 render를 호출한다.
+      Api.saveWorkOrders(workOrders).done(function () {
+        render();
+      });
+    });
   });
 
   $("#workOrderTableBody").on("click", ".btn-history", function () {
@@ -150,9 +160,12 @@ $(function () {
     if (!item || item.status === "CANCELED") return alert("이미 취소된 작업지시입니다.");
     if (item.status === "DONE") return alert("완료된 작업지시는 취소할 수 없습니다.");
     if (!confirm("작업지시를 취소하시겠습니까?")) return;
-    saveHistory(item.id, item.status, "CANCELED");
-    item.status = "CANCELED";
-    Api.saveWorkOrders(workOrders);
-    render();
+    saveHistory(item.id, item.status, "CANCELED").done(function () {
+      item.status = "CANCELED";
+      // 추후 API 저장으로 바뀌어도 이력 저장과 작업지시 저장이 끝난 뒤 render를 호출한다.
+      Api.saveWorkOrders(workOrders).done(function () {
+        render();
+      });
+    });
   });
 });

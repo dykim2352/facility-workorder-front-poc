@@ -48,14 +48,16 @@ $(function () {
     }).join("") || '<tr><td colspan="5" class="empty">관련 작업지시가 없습니다.</td></tr>');
   }
 
-  // 상세 화면에서 변경한 자산 상태를 localStorage에 저장한다.
+  // 상세 화면에서 변경한 자산 상태를 저장한다.
   function bindStatusChange(asset, assets) {
     $("#assetStatusSelect").val(asset.status);
     $("#changeStatusBtn").on("click", function () {
       asset.status = $("#assetStatusSelect").val();
       asset.updatedAt = App.today();
-      Api.saveAssets(assets);
-      location.reload();
+      // 추후 API 저장으로 바뀌어도 저장 완료 후 상세 화면을 다시 조회한다.
+      Api.saveAssets(assets).done(function () {
+        location.reload();
+      });
     });
   }
 
