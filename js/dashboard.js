@@ -54,7 +54,7 @@ $(function () {
     }).slice(0, 5);
 
     $("#recentWorkOrders").html(rows.map(function (item) {
-      return "<tr><td>" + App.escapeHtml(item.title) + "</td><td>" + App.escapeHtml(assetMap[item.assetId]) + "</td><td>" + App.badge(item.priority) + "</td><td>" + App.badge(item.status) + "</td><td>" + App.formatDate(item.requestedAt) + "</td></tr>";
+      return '<tr class="' + (App.isActiveUrgent(item) ? "is-urgent" : "") + '"><td>' + App.escapeHtml(item.title) + "</td><td>" + App.escapeHtml(assetMap[item.assetId]) + "</td><td>" + App.badge(item.priority) + "</td><td>" + App.badge(item.status) + "</td><td>" + App.formatDate(item.requestedAt) + "</td></tr>";
     }).join(""));
   }
 

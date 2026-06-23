@@ -49,7 +49,7 @@ $(function () {
     var pageInfo = TableUtil.paginate(filterRows(), state.page, state.pageSize);
     state.page = pageInfo.page;
     $("#workOrderTableBody").html(pageInfo.rows.map(function (item) {
-      return '<tr class="' + (item.priority === "URGENT" ? "is-urgent" : "") + '"><td>' + App.escapeHtml(item.title) + "</td><td>" 
+      return '<tr class="' + (App.isActiveUrgent(item) ? "is-urgent" : "") + '"><td>' + App.escapeHtml(item.title) + "</td><td>" 
       + App.escapeHtml(assetName(item.assetId)) + "</td><td>" + App.badge(item.priority) + "</td><td>" 
       + App.badge(item.status) + "</td><td>" + App.escapeHtml(item.assignee || "-") + "</td><td>" 
       + App.formatDate(item.requestedAt) + '</td><td><button class="btn btn-ghost btn-next" data-id="' + item.id + '">상태 변경</button> ' 

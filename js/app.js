@@ -46,6 +46,11 @@ var App = (function () {
     return '<span class="badge badge-' + className + '">' + (labels[value] || value || "-") + "</span>";
   }
 
+  // 긴급이면서 아직 종료되지 않은 작업지시인지 확인한다.
+  function isActiveUrgent(item) {
+    return item.priority === "URGENT" && item.status !== "DONE" && item.status !== "CANCELED";
+  }
+
   // 로그인되지 않은 사용자를 로그인 화면으로 보낸다.
   function requireLogin() {
     if (!localStorage.getItem(Storage.keys.loginUser)) {
@@ -82,6 +87,7 @@ var App = (function () {
     formatDate: formatDate,
     escapeHtml: escapeHtml,
     badge: badge,
+    isActiveUrgent: isActiveUrgent,
     requireLogin: requireLogin,
     initLayout: initLayout
   };
