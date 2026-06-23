@@ -61,7 +61,7 @@ HTML, CSS, JavaScript, jQuery로 구현한 시설물 자산 및 작업지시 관
 - 자산 등록/수정, 작업지시 등록, 이력 조회 모달
 - 폼 필수값 검증 및 오류 메시지 표시
 - CSV 파싱, 필수 헤더 검증, 상태 코드 검증, 날짜 형식 검증
-- 로그인 만료 처리 및 보호 화면 접근 제어
+- 로그인 만료 처리 및 관리 화면 접근 제어
 - 테스트 데이터 및 로그인 정보 초기화
 
 ## 로컬 실행 방법
@@ -99,6 +99,11 @@ npx http-server . -p 8080
 - JSON 파일을 AJAX로 로딩하므로 HTML 파일을 직접 더블클릭하지 말고 로컬 웹 서버로 실행합니다.
 - jQuery 파일은 프로젝트에 포함되어 있어 별도 CDN 연결 없이 실행할 수 있습니다.
 - `node server.js`와 `npx http-server`는 Node.js가 설치되어 있어야 사용할 수 있습니다. ([Node.js 다운로드](https://nodejs.org/))
+
+## 문서
+
+- 주요 이슈와 처리 내역: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
+- 구현 중 선택한 구조와 제외 범위: [docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md)
 
 ## 향후 개선 방향
 
