@@ -1,5 +1,5 @@
 $(function () {
-  App.requireLogin();
+  if (!App.requireLogin()) return;
   App.initLayout("dashboard");
 
   $.when(Api.loadAssets(), Api.loadWorkOrders()).done(function (assets, workOrders) {

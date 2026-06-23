@@ -1,5 +1,5 @@
 $(function () {
-  App.requireLogin();
+  if (!App.requireLogin()) return;
   App.initLayout("work-orders");
   Modal.bindClose();
 

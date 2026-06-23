@@ -15,6 +15,7 @@ var App = (function () {
     URGENT: "긴급"
   };
   var loginTimeoutMs = 60 * 60 * 1000;
+  var authRestoreBound = false;
 
   // URL query string에서 단일 값을 읽는다.
   function getQuery(name) {
@@ -92,21 +93,29 @@ var App = (function () {
     Storage.remove(Storage.keys.loginUser);
   }
 
-  // 로그인 후 돌아올 현재 화면 경로를 만든다.
-  function getCurrentPagePath() {
-    var pageName = location.pathname.split("/").pop() || "index.html";
-    return pageName + location.search;
-  }
-
   // 로그인되지 않은 사용자를 로그인 화면으로 보낸다.
   function requireLogin() {
     if (!getLoginUser()) {
-      location.href = "login.html?redirect=" + encodeURIComponent(getCurrentPagePath());
+      $("body").hide();
+      location.replace("login.html");
+      return false;
     }
+    return true;
+  }
+
+  // 뒤로가기 캐시로 보호 화면이 복원될 때 로그인 상태를 다시 확인한다.
+  function bindAuthRestoreCheck() {
+    if (authRestoreBound) return;
+    authRestoreBound = true;
+
+    window.addEventListener("pageshow", function () {
+      requireLogin();
+    });
   }
 
   // 공통 header/sidebar 이벤트와 현재 메뉴 표시를 초기화한다.
   function initLayout(activePage) {
+    bindAuthRestoreCheck();
     var user = getLoginUser();
     $("#loginUserName").text(user ? user.userId : "");
     $('.side-nav a[data-page="' + activePage + '"]').addClass("is-active");
@@ -117,13 +126,13 @@ var App = (function () {
 
     $("#logoutBtn").on("click", function () {
       clearLoginUser();
-      location.href = "login.html";
+      location.replace("login.html");
     });
 
     $("#clearStorageBtn").on("click", function () {
       if (!confirm("저장된 샘플 데이터와 로그인 정보를 모두 초기화하시겠습니까?")) return;
       Storage.clearAll();
-      location.href = "login.html";
+      location.replace("login.html");
     });
   }
 
@@ -141,6 +150,7 @@ var App = (function () {
     saveLoginUser: saveLoginUser,
     clearLoginUser: clearLoginUser,
     requireLogin: requireLogin,
+    bindAuthRestoreCheck: bindAuthRestoreCheck,
     initLayout: initLayout
   };
 })();

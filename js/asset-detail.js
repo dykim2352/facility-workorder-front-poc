@@ -1,5 +1,5 @@
 $(function () {
-  App.requireLogin();
+  if (!App.requireLogin()) return;
   App.initLayout("assets");
 
   var assetId = App.getQuery("id");
