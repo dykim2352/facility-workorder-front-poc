@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CSV Import | 시설물 자산/작업지시 관리 POC</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="top-header">
+      <button id="menuToggle" class="menu-toggle" type="button">☰</button>
+      <a class="brand" href="dashboard.html">시설물 자산/작업지시 관리</a>
+      <span class="header-spacer"></span>
+      <span id="loginUserName" class="login-user"></span>
+      <button id="clearStorageBtn" class="btn btn-ghost" type="button">초기화</button>
+      <button id="logoutBtn" class="btn btn-ghost" type="button">로그아웃</button>
+    </header>
+    <aside id="sidebar" class="sidebar">
+      <nav class="side-nav">
+        <a href="dashboard.html" data-page="dashboard">대시보드</a>
+        <a href="assets.html" data-page="assets">자산 관리</a>
+        <a href="work-orders.html" data-page="work-orders">작업지시</a>
+        <a href="import.html" data-page="import">CSV Import</a>
+      </nav>
+    </aside>
+    <main class="content">
+      <div class="page-title"><h1>CSV Import</h1><p>CSV 텍스트를 파싱해 자산 데이터를 localStorage에 추가합니다.</p></div>
+      <section class="panel">
+        <div class="form-field"><label for="csvText">CSV 텍스트</label><textarea id="csvText" class="csv-area"></textarea></div>
+        <div class="actions">
+          <button id="sampleCsvBtn" class="btn" type="button">샘플 CSV</button>
+          <button id="parseCsvBtn" class="btn btn-primary" type="button">미리보기</button>
+          <button id="importBtn" class="btn btn-primary" type="button">Import</button>
+        </div>
+        <div id="importResult" class="result-box"></div>
+      </section>
+      <section class="panel">
+        <h2 class="panel-title">미리보기</h2>
+        <div class="table-wrap">
+          <table class="data-table">
+            <thead><tr><th>자산코드</th><th>자산명</th><th>유형</th><th>상태</th><th>공간</th><th>설치일</th></tr></thead>
+            <tbody id="previewBody"><tr><td colspan="6" class="empty">미리보기 데이터가 없습니다.</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+  <script src="vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/storage.js"></script><script src="js/api.js"></script><script src="js/app.js"></script>
+  <script src="js/import.js"></script>
+</body>
+</html>

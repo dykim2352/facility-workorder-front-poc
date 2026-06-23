@@ -1,0 +1,7 @@
+[
+  { "id": "S001", "projectName": "스마트팩토리", "buildingName": "A동", "floorName": "3F", "spaceName": "기계실" },
+  { "id": "S002", "projectName": "스마트팩토리", "buildingName": "A동", "floorName": "B1", "spaceName": "펌프실" },
+  { "id": "S003", "projectName": "스마트팩토리", "buildingName": "B동", "floorName": "1F", "spaceName": "로비" },
+  { "id": "S004", "projectName": "스마트팩토리", "buildingName": "A동", "floorName": "2F", "spaceName": "생산라인 2" },
+  { "id": "S005", "projectName": "스마트팩토리", "buildingName": "C동", "floorName": "4F", "spaceName": "서버실" }
+]

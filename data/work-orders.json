@@ -1,0 +1,57 @@
+[
+  {
+    "id": "W001",
+    "assetId": "A003",
+    "title": "승강기 운행 중지 점검",
+    "description": "B동 로비 승강기 이상 소음 및 운행 중지",
+    "priority": "URGENT",
+    "status": "IN_PROGRESS",
+    "assignee": "김정비",
+    "requestedAt": "2026-06-18T09:30:00",
+    "completedAt": ""
+  },
+  {
+    "id": "W002",
+    "assetId": "A002",
+    "title": "펌프 압력 저하 확인",
+    "description": "순환 펌프 압력 저하 알림 발생",
+    "priority": "HIGH",
+    "status": "ASSIGNED",
+    "assignee": "박시설",
+    "requestedAt": "2026-06-17T13:20:00",
+    "completedAt": ""
+  },
+  {
+    "id": "W003",
+    "assetId": "A001",
+    "title": "공조기 필터 교체",
+    "description": "정기 예방점검에 따른 필터 교체",
+    "priority": "MEDIUM",
+    "status": "DONE",
+    "assignee": "이관리",
+    "requestedAt": "2026-06-15T10:00:00",
+    "completedAt": "2026-06-15T16:30:00"
+  },
+  {
+    "id": "W004",
+    "assetId": "A004",
+    "title": "배기 팬 진동 측정",
+    "description": "2F 생산라인 팬 진동 수치 확인",
+    "priority": "LOW",
+    "status": "OPEN",
+    "assignee": "",
+    "requestedAt": "2026-06-19T08:45:00",
+    "completedAt": ""
+  },
+  {
+    "id": "W005",
+    "assetId": "A006",
+    "title": "UPS 배터리 상태 점검",
+    "description": "서버실 UPS 배터리 잔량 테스트",
+    "priority": "HIGH",
+    "status": "OPEN",
+    "assignee": "최전기",
+    "requestedAt": "2026-06-20T11:10:00",
+    "completedAt": ""
+  }
+]

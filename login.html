@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>로그인 | 시설물 자산/작업지시 관리 POC</title>
+  <link rel="stylesheet" href="css/reset.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/components.css">
+</head>
+<body class="login-page">
+  <main class="login-card">
+    <h1>시설물 자산/작업지시 관리</h1>
+    <p>demo / demo1234 계정으로 로그인합니다.</p>
+    <form id="loginForm">
+      <div class="form-field">
+        <label for="userId">사용자 ID</label>
+        <input id="userId" name="userId" autocomplete="username">
+        <span class="field-error"></span>
+      </div>
+      <div class="form-field form-field-spaced">
+        <label for="password">Password</label>
+        <input id="password" name="password" type="password" autocomplete="current-password">
+        <span class="field-error"></span>
+      </div>
+      <div class="actions">
+        <button class="btn btn-primary" type="submit">로그인</button>
+      </div>
+      <p id="loginError" class="field-error"></p>
+    </form>
+  </main>
+  <script src="vendor/jquery-3.7.1.min.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/validation.js"></script>
+  <script>
+    $("#loginForm").on("submit", function (event) {
+      event.preventDefault();
+      if (!Validation.required($(this), ["userId", "password"])) return;
+      if ($("#userId").val() === "demo" && $("#password").val() === "demo1234") {
+        Storage.set(Storage.keys.loginUser, { userId: "demo", loginAt: new Date().toISOString() });
+        location.href = "dashboard.html";
+      } else {
+        $("#loginError").text("ID 또는 password가 올바르지 않습니다.");
+      }
+    });
+  </script>
+</body>
+</html>

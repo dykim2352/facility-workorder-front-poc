@@ -1,0 +1,68 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+h1,
+h2,
+h3,
+p,
+a,
+button,
+input,
+select,
+textarea,
+table,
+thead,
+tbody,
+tfoot,
+tr,
+th,
+td,
+ul,
+li,
+form,
+label,
+main,
+header,
+nav,
+aside,
+section {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  min-width: 320px;
+  color: #1f2937;
+  font-family: Arial, "Malgun Gothic", sans-serif;
+  background: #f4f6f8;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
