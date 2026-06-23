@@ -91,16 +91,3 @@ PowerShell 실행 정책 때문에 `npx`가 막히는 환경에서는 포함된 
 ```bash
 node server.js
 ```
-
-## 의도적으로 제외한 것
-
-- Vue/React/Angular 제외
-- Spring Boot 제외
-- DB 제외
-- Docker 제외
-- 실제 BIM/IFC 파싱 제외
-- Bootstrap, jQuery UI, Chart 라이브러리 제외
-
-## 이력서 포트폴리오 설명 문구
-
-시설물 자산 및 작업지시 관리 관리자 화면 POC를 HTML5, CSS3, JavaScript, jQuery로 구현했습니다. JSON 기반 초기 데이터 로딩, localStorage 영속화, 자산 CRUD, 작업지시 상태 흐름과 이력 모달, 검색/필터/정렬/페이지네이션, 모달, 폼 검증, CSV import 및 헤더/값 검증 기능을 직접 구현하여 레거시 jQuery 기반 관리자 화면 개발 역량을 보여주는 프로젝트입니다.
