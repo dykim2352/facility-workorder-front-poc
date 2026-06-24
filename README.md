@@ -102,8 +102,9 @@ npx http-server . -p 8080
 
 ## 문서
 
-- 주요 이슈와 처리 내역: [docs/TROUBLESHOOTING.md](docs/TROUBLESHOOTING.md)
-- 구현 중 선택한 구조와 제외 범위: [docs/DESIGN_DECISIONS.md](docs/DESIGN_DECISIONS.md)
+- 화면설계: [docs/SCREEN_DESIGN.md](docs/SCREEN_DESIGN.md)
+- 데이터 구조: [docs/DATA_MODEL.md](docs/DATA_MODEL.md)
+- 테스트케이스: [docs/TEST_CASES.md](docs/TEST_CASES.md)
 
 ## 향후 개선 방향
 
